@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->comment('varchar');
-            $table->integer('age')->comment('int');
-            $table->string('area')->comment('varchar');
-            $table->boolean('leader')->default(false)->comment('boolean/defaultがfalse');
-            $table->string('comment')->nullable()->comment('varchar/null許可');
+            $table->string('name')->comment('名前');
+            $table->integer('age')->comment('年齢');
+            $table->string('area')->comment('地域');
+            $table->boolean('leader')->default(false)->comment('リーダーかどうか');
+            $table->string('comment')->nullable()->comment('コメント');
+            
         });
     }
 

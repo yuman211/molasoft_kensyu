@@ -41,8 +41,9 @@ class MemberController extends Controller
 
         if(!empty($filtered))
         {
-            Log::info('25歳以上がいます。');
-        }elseif(!empty($filtered2)){
+            Log::info('25歳以上がいます');
+        }
+        if(!empty($filtered2)){
             Log::info('20歳以下がいます');
         }
 
