@@ -67,7 +67,7 @@ class MemberController extends Controller
         $sortMembers = $allMember->sortByDesc(function($member){
             return $member['age'];
         });
-        Log::info($sortMembers);
+        Log::info($this->jsonResponse($sortMembers));
 
         return 'test';
     }
