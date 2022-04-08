@@ -57,17 +57,17 @@ class MemberController extends Controller
             }
         });
 
-        Log::info($tokyoMembers);
+        Log::info(json_encode($tokyoMembers, JSON_UNESCAPED_UNICODE));
 
         //05.step7
         $areas = $allMember->pluck('area');
-        Log::info($areas);
+        Log::info(json_encode($areas,JSON_UNESCAPED_UNICODE));
 
         //05.step 8
         $sortMembers = $allMember->sortByDesc(function($member){
             return $member['age'];
         });
-        Log::info($this->jsonResponse($sortMembers));
+        Log::info(json_encode($sortMembers,JSON_UNESCAPED_UNICODE));
 
         return 'test';
     }
