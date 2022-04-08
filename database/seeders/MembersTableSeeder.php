@@ -20,7 +20,7 @@ class MembersTableSeeder extends Seeder
 
             DB::table('members')->insert(
                 [
-                    'name' => 'name.$i',
+                    'name' => "name . $i",
                     'age' => $i,
                     'area' => Arr::random(['東京', '大阪']),
                     'leader' => Arr::random([true, false]),
