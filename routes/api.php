@@ -19,4 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/member_list',[MemberController::class,'showMemberList']);
+Route::get('/member_list/{member_area?}',[MemberController::class,'showMemberList']);
+
+Route::get('/member_detail/{member_id}',[MemberController::class,'showMemberInfo']);
+
+Route::post('/search_members',[MemberController::class,'searchMembers']);

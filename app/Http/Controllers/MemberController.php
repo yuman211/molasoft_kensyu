@@ -8,8 +8,10 @@ use App\Models\Member;
 
 class MemberController extends Controller
 {
-    public function showMemberList(Member $member)
+    public function showMemberList(Member $member, $member_area = null)
     {
+        /**
+         *
         // $value = [
         //     'a' => 'ika',
         //     'b' => 'ikura',
@@ -31,19 +33,18 @@ class MemberController extends Controller
         // Log::info($tokyoUser);
 
         //05.Step3・4
-        $filtered = $allMember->filter(function($member){
-            return $member['age'] >=25;
+        $filtered = $allMember->filter(function ($member) {
+            return $member['age'] >= 25;
         });
 
         $filtered2 = $allMember->filter(function ($member) {
             return $member['age'] <= 20;
         });
 
-        if(!empty($filtered))
-        {
+        if (!empty($filtered)) {
             Log::info('25歳以上がいます');
         }
-        if(!empty($filtered2)){
+        if (!empty($filtered2)) {
             Log::info('20歳以下がいます');
         }
 
@@ -52,7 +53,7 @@ class MemberController extends Controller
 
         //05.step6
         $tokyoMembers = $allMember->map(function ($member) {
-            if($member['area'] == '東京'){
+            if ($member['area'] == '東京') {
                 return $member;
             }
         });
@@ -61,14 +62,49 @@ class MemberController extends Controller
 
         //05.step7
         $areas = $allMember->pluck('area');
-        Log::info(json_encode($areas,JSON_UNESCAPED_UNICODE));
+        Log::info(json_encode($areas, JSON_UNESCAPED_UNICODE));
 
         //05.step 8
-        $sortMembers = $allMember->sortByDesc(function($member){
+        $sortMembers = $allMember->sortByDesc(function ($member) {
             return $member['age'];
         });
-        Log::info(json_encode($sortMembers,JSON_UNESCAPED_UNICODE));
+        Log::info(json_encode($sortMembers, JSON_UNESCAPED_UNICODE));
 
-        return 'test';
+         */
+
+        //07.step2
+
+        //受け取った値がnullなら全てのデータ、nullでなければ受け取った値で検索したデータを格納
+        if (!empty($member_area)) {
+            $locatedMember = $member->where('area', $member_area)->get();
+        } else{
+            $locatedMember = $member->all();
+        }
+
+        //格納したデータに値があればそれを出力して、なければメッセージ出力。
+        if($locatedMember->isNotEmpty()){
+            Log::info(json_encode($locatedMember, JSON_UNESCAPED_UNICODE));
+        }else{
+            Log::info('該当するユーザーはいません');
+        }
+    }
+
+    public function showMemberInfo(Member $member, $member_id)
+    {
+        Log::info(json_encode($member->find($member_id), JSON_UNESCAPED_UNICODE));
+    }
+
+    public function searchMembers(Member $member, Request $request)
+    {
+        $minAge = $request->input('minAge');
+        $maxAge = $request->input('maxAge');
+
+        if ($minAge === null && $maxAge === null) {
+            return $member->all();
+        } elseif ($maxAge === null) {
+            return $member->where('age', '>=', $minAge)->get();
+        } else {
+            return $member->where('age', '>=', $minAge)->where('age', '<=', $maxAge)->get();
+        }
     }
 }
