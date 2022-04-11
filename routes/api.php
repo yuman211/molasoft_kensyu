@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,7 @@ Route::get('/member_list/{member_area?}',[MemberController::class,'showMemberLis
 Route::get('/member_detail/{member_id}',[MemberController::class,'showMemberInfo']);
 
 Route::post('/search_members',[MemberController::class,'searchMembers']);
+
+Route::get('/team_list/{genre?}',[TeamController::class,'showTeams']);
+
+Route::post('/search_teams', [TeamController::class, 'searchTeams']);
