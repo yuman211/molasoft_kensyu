@@ -4,13 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Rank;
 
 class Team extends Model
 {
     use HasFactory;
 
+    public function rank()
+    {
+        return $this->hasOne(Rank::class,'id','rank');
+    }
+
+    //     public function team()
+    // {
+    //     return $this->hasMany(Member::class,'id','member');
+    // }
+
     public function getAllTeams(){
-        return $this->all();
+        return $this->with('rank')->get();
     }
 
     public function searchTeamsByFee($minFee,$maxFee){
@@ -56,4 +67,7 @@ class Team extends Model
 
         return $query->get();
     }
+
+
+
 }
