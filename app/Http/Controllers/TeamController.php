@@ -22,9 +22,21 @@ class TeamController extends Controller
     }
 
     public function searchTeams(Team $team, Request $request){
-        $minAge = $request->input('minAge');
-        $maxAge = $request->input('maxAge');
-        return $team->searchTeamsByFee($minAge,$maxAge);
+        $minFee = $request->input('minFee');
+        $maxFee = $request->input('maxFee');
+        $genre = $request->input('genre');
+
+        // if(isset($minFee)||isset($maxFee)){
+        // $searchedTeams = $team->searchTeamsByFee($minFee,$maxFee);
+        // }
+
+        // if(isset($genre)){
+        // $searchedTeams = $team->searchTeamsByGenre($genre);
+        // }
+
+        // return $searchedTeams;
+
+        return $team->searchTeamsByFeeAndGenre($minFee,$maxFee,$genre);
 
 
     }

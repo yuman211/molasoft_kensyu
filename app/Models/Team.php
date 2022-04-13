@@ -9,28 +9,51 @@ class Team extends Model
 {
     use HasFactory;
 
-    public function getAllTeams(Team $team){
-        return $team->all();
+    public function getAllTeams(){
+        return $this->all();
     }
 
-    public function searchTeamsByGenre(Team $team,$genre){
-        return $team->where('genre',$genre)->get();
-    }
+    public function searchTeamsByFee($minFee,$maxFee){
 
-    public function searchTeamsByFee(Team $team,$minAge,$maxAge){
+        $query = $this->query();
 
-        $query = $team;
+        if(isset($minFee)){
+            $query = $query->where('fee', '>=', $minFee);
+        }
 
-        if (!empty($minAge) && !empty($maxAge)) {
-            $query = $query->where('age', '>=', $minAge)->where('age', '<=', $maxAge);
-        } elseif (!empty($maxAge)) {
-            $query = $query->where('age', '<=', $maxAge);
-        } elseif (!empty($minAge)) {
-            $query = $query->where('age', '>=', $minAge);
+        if(isset($maxFee)){
+            $query = $query->where('fee', '<=', $maxFee);
         }
 
         return $query->get();
-
     }
 
+    public function searchTeamsByGenre($genre){
+        $query = $this->query();
+
+        if(isset($genre)){
+            $query = $query->where('genre', $genre);
+        }
+
+        return $query->get();
+    }
+
+    public function searchTeamsByFeeAndGenre($minFee,$maxFee,$genre){
+
+        $query = $this->query();
+
+        if (isset($minFee)) {
+            $query->where('fee', '>=', $minFee);
+        }
+
+        if (isset($maxFee)) {
+            $query->where('fee', '<=', $maxFee);
+        }
+
+        if (isset($genre)) {
+            $query->where('genre', $genre);
+        }
+
+        return $query->get();
+    }
 }
