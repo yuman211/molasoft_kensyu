@@ -18,11 +18,11 @@ class Team extends Model
         $query = $this->query();
 
         if(isset($minFee)){
-            $query = $query->where('fee', '>=', $minFee);
+            $query->where('fee', '>=', $minFee);
         }
 
         if(isset($maxFee)){
-            $query = $query->where('fee', '<=', $maxFee);
+            $query->where('fee', '<=', $maxFee);
         }
 
         return $query->get();
@@ -32,7 +32,7 @@ class Team extends Model
         $query = $this->query();
 
         if(isset($genre)){
-            $query = $query->where('genre', $genre);
+            $query->where('genre', $genre);
         }
 
         return $query->get();
