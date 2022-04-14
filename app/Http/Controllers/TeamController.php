@@ -13,9 +13,7 @@ class TeamController extends Controller
         if (isset($genre)) {
             $locatedTeams = $team->searchTeamsByGenre($genre);
             Log::info(json_encode($locatedTeams, JSON_UNESCAPED_UNICODE));
-        }
-
-        if (!isset($genre)) {
+        }else{
             $allTeams = $team->getAllTeams();
             Log::info(json_encode($allTeams, JSON_UNESCAPED_UNICODE));
         }
