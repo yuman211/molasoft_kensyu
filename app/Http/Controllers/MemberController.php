@@ -74,12 +74,7 @@ class MemberController extends Controller
 
         //07.step2
 
-        //受け取った値がnullなら全てのデータ、nullでなければ受け取った値で検索したデータを格納
-        if (!empty($member_area)) {
-            $locatedMember = $member->where('area', $member_area)->get();
-        } else {
-            $locatedMember = $member->all();
-        }
+        $locatedMember = $member->searchMembersByArea($member_area);
 
         //格納したデータに値があればそれを出力して、なければメッセージ出力。
         if ($locatedMember->isNotEmpty()) {
@@ -99,24 +94,7 @@ class MemberController extends Controller
         $minAge = $request->input('minAge');
         $maxAge = $request->input('maxAge');
 
-        $query = $member;
+        return $member->searchMembersByAge($minAge,$maxAge);
 
-        if (!empty($minAge) && !empty($maxAge)) {
-            $query = $query->where('age', '>=', $minAge)->where('age', '<=', $maxAge);
-        } elseif (!empty($maxAge)) {
-            $query = $query->where('age', '<=', $maxAge);
-        } elseif (!empty($minAge)) {
-            $query = $query->where('age', '>=', $minAge);
-        }
-
-        return $query->get();
-
-        // if ($minAge === null && $maxAge === null) {
-        //     return $member->all();
-        // } elseif ($maxAge === null) {
-        //     return $member->where('age', '>=', $minAge)->get();
-        // } else {
-        //     return $member->where('age', '>=', $minAge)->where('age', '<=', $maxAge)->get();
-        // }
     }
 }
