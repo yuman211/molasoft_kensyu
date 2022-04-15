@@ -89,9 +89,11 @@ class MemberController extends Controller
         }
     }
 
+    //リレーション課題02.step2
     public function showMemberInfo(Member $member, $member_id)
     {
-        Log::info(json_encode($member->find($member_id), JSON_UNESCAPED_UNICODE));
+        $memberWithTeams = $member->getMembersWithTeams($member_id);
+        Log::info(json_encode($memberWithTeams, JSON_UNESCAPED_UNICODE));
     }
 
     public function searchMembers(Member $member, Request $request)
@@ -111,12 +113,7 @@ class MemberController extends Controller
 
         return $query->get();
 
-        // if ($minAge === null && $maxAge === null) {
-        //     return $member->all();
-        // } elseif ($maxAge === null) {
-        //     return $member->where('age', '>=', $minAge)->get();
-        // } else {
-        //     return $member->where('age', '>=', $minAge)->where('age', '<=', $maxAge)->get();
-        // }
     }
+
+
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Rank;
+use App\Models\Member;
 
 class Team extends Model
 {
@@ -15,7 +16,22 @@ class Team extends Model
         return $this->hasOne(Rank::class, 'id', 'rank');
     }
 
-    public function getAllTeams()
+    public function member()
+    {
+        return $this->hasMany(Member::class,'teamId','id');
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(Member::class);
+    }
+
+    public function getTeamWithMembers()
+    {
+        return $this->with('member')->get();
+    }
+
+    public function getAllTeamsWithRanks()
     {
         return $this->with('rank')->get();
     }

@@ -13,13 +13,14 @@ class TeamController extends Controller
         if (isset($genre)) {
             $locatedTeams = $team->searchTeamsByGenre($genre);
             Log::info(json_encode($locatedTeams, JSON_UNESCAPED_UNICODE));
-        }else{
-            $allTeams = $team->getAllTeams();
+        } else {
+            $allTeams = $team->getAllTeamsWithRanks();
             Log::info(json_encode($allTeams, JSON_UNESCAPED_UNICODE));
         }
     }
 
-    public function searchTeams(Team $team, Request $request){
+    public function searchTeams(Team $team, Request $request)
+    {
         $minFee = $request->input('minFee');
         $maxFee = $request->input('maxFee');
         $genre = $request->input('genre');
@@ -34,8 +35,18 @@ class TeamController extends Controller
 
         // return $searchedTeams;
 
-        return $team->searchTeamsByFeeAndGenre($minFee,$maxFee,$genre);
+        return $team->searchTeamsByFeeAndGenre($minFee, $maxFee, $genre);
+    }
 
+    //リレーション02.step1
+    public function showTeamWithMembers(Team $team)
+    {
+        Log::info(json_encode($team->getTeamWithMembers(),JSON_UNESCAPED_UNICODE));
+    }
 
+    //リレーション02.step4
+    public function showTeamsWithMembers(Team $team)
+    {
+        Log::info(json_encode($team->getTeamWithMembers(),JSON_UNESCAPED_UNICODE));
     }
 }

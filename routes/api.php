@@ -29,3 +29,9 @@ Route::post('/search_members',[MemberController::class,'searchMembers']);
 Route::get('/team_list/{genre?}',[TeamController::class,'showTeams']);
 
 Route::post('/search_teams', [TeamController::class, 'searchTeams']);
+
+//リレーション02.step1
+Route::get('/team_members',[TeamController::class,'showTeamWithMembers']);
+
+ //リレーション02.step4
+Route::get('/teams_members',[TeamController::class,'showTeamsWithMembers']);
