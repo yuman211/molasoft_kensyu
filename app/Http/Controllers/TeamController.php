@@ -35,7 +35,6 @@ class TeamController extends Controller
         // return $searchedTeams;
 
         return $team->searchTeamsByFeeAndGenre($minFee,$maxFee,$genre);
-
-
     }
+
 }

@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Game;
 
 class Team extends Model
 {
     use HasFactory;
+
 
     public function getAllTeams(){
         return $this->all();

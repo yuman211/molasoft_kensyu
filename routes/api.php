@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\GameController;
+use App\Models\Game;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +28,8 @@ Route::get('/member_detail/{member_id}',[MemberController::class,'showMemberInfo
 
 Route::post('/search_members',[MemberController::class,'searchMembers']);
 
+Route::get('/team_list/games', [GameController::class, 'showAllGames']);
+
 Route::get('/team_list/{genre?}',[TeamController::class,'showTeams']);
 
-Route::post('/search_teams', [TeamController::class, 'searchTeams']);
+Route::post('/search_games', [GameController::class, 'searchGames']);
