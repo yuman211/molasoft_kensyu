@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Member;
+use Exception;
 
 class MemberController extends Controller
 {
@@ -72,29 +73,42 @@ class MemberController extends Controller
 
          */
 
-        //07.step2
+        try {
+            //07.step2
+            $locatedMember = $member->searchMembersByArea($member_area);
 
-        $locatedMember = $member->searchMembersByArea($member_area);
-
-        //格納したデータに値があればそれを出力して、なければメッセージ出力。
-        if ($locatedMember->isNotEmpty()) {
-            Log::info(json_encode($locatedMember, JSON_UNESCAPED_UNICODE));
-        } else {
-            Log::info('該当するユーザーはいません');
+            //格納したデータに値があればそれを出力して、なければメッセージ出力。
+            if ($locatedMember->isNotEmpty()) {
+                Log::info(json_encode($locatedMember, JSON_UNESCAPED_UNICODE));
+            } else {
+                Log::info('該当するユーザーはいません');
+            }
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
         }
     }
 
     public function showMemberInfo(Member $member, $member_id)
     {
-        Log::info(json_encode($member->find($member_id), JSON_UNESCAPED_UNICODE));
+        try {
+            Log::info(json_encode($member->find($member_id), JSON_UNESCAPED_UNICODE));
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
+        }
     }
 
     public function searchMembers(Member $member, Request $request)
     {
-        $minAge = $request->input('minAge');
-        $maxAge = $request->input('maxAge');
+        try {
+            $minAge = $request->input('minAge');
+            $maxAge = $request->input('maxAge');
 
-        return $member->searchMembersByAge($minAge,$maxAge);
-
+            return $member->searchMembersByAge($minAge, $maxAge);
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
+        }
     }
 }
