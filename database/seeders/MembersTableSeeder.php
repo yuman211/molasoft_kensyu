@@ -28,24 +28,8 @@ class MembersTableSeeder extends Seeder
                     'gender' => Arr::random(['男性', '女性', 'その他']),
                 ]);
         }
-        // DB::table('members')->insert(
-        // [
-        //     'id' => 1,
-        //     'name' => 'demo1',
-        //     'age' => 22,
-        //     'area' =>'東京',
-        //     'leader'=> true,
-        //     'comment'=>'こんにちは',
-        // ]);
-
-        // DB::table('members')->insert(
-        // [
-        //     'id' => 2,
-        //     'name' => 'demo2',
-        //     'age' => 32,
-        //     'area' =>'大阪',
-        //     'leader'=> false,
-        //     'comment'=> NULL,
-        // ]);
+        
     }
+
+
 }
