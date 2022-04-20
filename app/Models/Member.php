@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Exception;
 use Illuminate\Support\Facades\Log;
+use Exception;
 
 class Member extends Model
 {
@@ -13,7 +13,6 @@ class Member extends Model
 
     public function searchMembersByArea($member_area)
     {
-
         try {
             $query = $this->query();
 

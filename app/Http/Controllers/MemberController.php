@@ -75,7 +75,6 @@ class MemberController extends Controller
 
         try {
             //07.step2
-
             $locatedMember = $member->searchMembersByArea($member_area);
 
             //格納したデータに値があればそれを出力して、なければメッセージ出力。
@@ -92,7 +91,6 @@ class MemberController extends Controller
 
     public function showMemberInfo(Member $member, $member_id)
     {
-
         try {
             Log::info(json_encode($member->find($member_id), JSON_UNESCAPED_UNICODE));
         } catch (Exception $e) {
@@ -103,7 +101,6 @@ class MemberController extends Controller
 
     public function searchMembers(Member $member, Request $request)
     {
-
         try {
             $minAge = $request->input('minAge');
             $maxAge = $request->input('maxAge');

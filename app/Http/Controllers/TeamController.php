@@ -33,6 +33,16 @@ class TeamController extends Controller
             $maxFee = $request->input('maxFee');
             $genre = $request->input('genre');
 
+            // if(isset($minFee)||isset($maxFee)){
+            // $searchedTeams = $team->searchTeamsByFee($minFee,$maxFee);
+            // }
+
+            // if(isset($genre)){
+            // $searchedTeams = $team->searchTeamsByGenre($genre);
+            // }
+
+            // return $searchedTeams;
+
             return $team->searchTeamsByFeeAndGenre($minFee, $maxFee, $genre);
         } catch (Exception $e) {
             Log::emergency($e->getMessage());

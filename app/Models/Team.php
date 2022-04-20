@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Exception;
 use Illuminate\Support\Facades\Log;
-
+use Exception;
 
 class Team extends Model
 {
@@ -27,9 +26,11 @@ class Team extends Model
         }
     }
 
-    public function searchTeamsByFee($minFee,$maxFee){
+    public function searchTeamsByFee($minFee, $maxFee)
+    {
 
         try {
+
             $query = $this->query();
 
             if (isset($minFee)) {
@@ -47,9 +48,11 @@ class Team extends Model
         }
     }
 
-    public function searchTeamsByGenre($genre){
+    public function searchTeamsByGenre($genre)
+    {
 
         try {
+
             $query = $this->query();
 
             if (isset($genre)) {
@@ -63,9 +66,11 @@ class Team extends Model
         }
     }
 
-    public function searchTeamsByFeeAndGenre($minFee,$maxFee,$genre){
+    public function searchTeamsByFeeAndGenre($minFee, $maxFee, $genre)
+    {
 
         try {
+
             $query = $this->query();
 
             if (isset($minFee)) {
