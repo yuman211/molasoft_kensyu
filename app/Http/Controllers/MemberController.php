@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Member;
+use Exception;
 
 class MemberController extends Controller
 {
@@ -72,20 +73,19 @@ class MemberController extends Controller
 
          */
 
-        //07.step2
+        try {
+            //07.step2
+            $locatedMember = $member->searchMembersByArea($member_area);
 
-        //受け取った値がnullなら全てのデータ、nullでなければ受け取った値で検索したデータを格納
-        if (!empty($member_area)) {
-            $locatedMember = $member->where('area', $member_area)->get();
-        } else {
-            $locatedMember = $member->all();
-        }
-
-        //格納したデータに値があればそれを出力して、なければメッセージ出力。
-        if ($locatedMember->isNotEmpty()) {
-            Log::info(json_encode($locatedMember, JSON_UNESCAPED_UNICODE));
-        } else {
-            Log::info('該当するユーザーはいません');
+            //格納したデータに値があればそれを出力して、なければメッセージ出力。
+            if ($locatedMember->isNotEmpty()) {
+                Log::info(json_encode($locatedMember, JSON_UNESCAPED_UNICODE));
+            } else {
+                Log::info('該当するユーザーはいません');
+            }
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
         }
     }
 
@@ -98,22 +98,14 @@ class MemberController extends Controller
 
     public function searchMembers(Member $member, Request $request)
     {
-        $minAge = $request->input('minAge');
-        $maxAge = $request->input('maxAge');
+        try {
+            $minAge = $request->input('minAge');
+            $maxAge = $request->input('maxAge');
 
-        $query = $member;
-
-        if (!empty($minAge) && !empty($maxAge)) {
-            $query = $query->where('age', '>=', $minAge)->where('age', '<=', $maxAge);
-        } elseif (!empty($maxAge)) {
-            $query = $query->where('age', '<=', $maxAge);
-        } elseif (!empty($minAge)) {
-            $query = $query->where('age', '>=', $minAge);
+            return $member->searchMembersByAge($minAge, $maxAge);
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
         }
-
-        return $query->get();
-
     }
-
-
 }

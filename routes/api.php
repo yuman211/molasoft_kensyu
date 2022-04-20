@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\GameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,18 +21,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/member_list/{member_area?}',[MemberController::class,'showMemberList']);
+Route::get('/member_list/{member_area?}', [MemberController::class, 'showMemberList']);
 
-Route::get('/member_detail/{member_id}',[MemberController::class,'showMemberInfo']);
+Route::get('/member_detail/{member_id}', [MemberController::class, 'showMemberInfo']);
 
-Route::post('/search_members',[MemberController::class,'searchMembers']);
+Route::post('/search_members', [MemberController::class, 'searchMembers']);
 
-Route::get('/team_list/{genre?}',[TeamController::class,'showTeams']);
+Route::get('/team_list/games', [GameController::class, 'showAllGames']);
+
+Route::get('/team_list/{genre?}', [TeamController::class, 'showTeams']);
 
 Route::post('/search_teams', [TeamController::class, 'searchTeams']);
 
-//リレーション02.step1
-Route::get('/team_members',[TeamController::class,'showTeamWithMembers']);
+Route::get('/teams_members', [TeamController::class, 'showTeamsWithMembers']);
 
- //リレーション02.step4
-Route::get('/teams_members',[TeamController::class,'showTeamsWithMembers']);
+Route::post('/search_games', [GameController::class, 'searchGames']);
