@@ -16,6 +16,33 @@ class Team extends Model
         return $this->belongsToMany(Practice::class, 'teams_practices', 'team_id', 'practice_id');
     }
 
+    public function rank()
+    {
+        return $this->hasOne(Rank::class, 'id', 'rank');
+    }
+
+    public function member()
+    {
+        return $this->hasMany(Member::class,'teamId','id');
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(Member::class,'team_members','team_id','member_id');
+    }
+
+    public function getTeamWithMembers()
+    {
+        return $this->with('member')->get();
+    }
+
+    public function getAllTeamsWithRanks()
+    {
+        return $this->with('rank')->get();
+    }
+
+
+
     public function getAllTeamsWithPractice(){
 
         try {
