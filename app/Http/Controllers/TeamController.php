@@ -49,4 +49,5 @@ class TeamController extends Controller
             return $e;
         }
     }
+
 }
