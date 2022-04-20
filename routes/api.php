@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,9 @@ Route::post('/search_members',[MemberController::class,'searchMembers']);
 Route::get('/team_list/{genre?}',[TeamController::class,'showTeams']);
 
 Route::post('/search_teams', [TeamController::class, 'searchTeams']);
+
+Route::get('/team/practice',[PracticeController::class, 'showAllPracticeWithTeam']);
+
+Route::get('/team/practice/past',[PracticeController::class,'showPastPracticesWithTeam']);
+
+Route::get('/team/practice/future', [PracticeController::class, 'showFuturePracticesWithTeam']);

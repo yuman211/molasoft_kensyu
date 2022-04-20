@@ -4,56 +4,86 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Exception;
+use Illuminate\Support\Facades\Log;
+
 
 class Team extends Model
 {
     use HasFactory;
 
-    public function getAllTeams(){
-        return $this->all();
+    public function practices()
+    {
+        return $this->belongsToMany(Practice::class, 'teams_practices', 'team_id', 'practice_id');
+    }
+
+    public function getAllTeamsWithPractice(){
+
+        try {
+            return $this->with('practices.members')->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
     }
 
     public function searchTeamsByFee($minFee,$maxFee){
 
-        $query = $this->query();
+        try {
+            $query = $this->query();
 
-        if(isset($minFee)){
-            $query->where('fee', '>=', $minFee);
+            if (isset($minFee)) {
+                $query->where('fee', '>=', $minFee);
+            }
+
+            if (isset($maxFee)) {
+                $query->where('fee', '<=', $maxFee);
+            }
+
+            return $query->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
         }
-
-        if(isset($maxFee)){
-            $query->where('fee', '<=', $maxFee);
-        }
-
-        return $query->get();
     }
 
     public function searchTeamsByGenre($genre){
-        $query = $this->query();
 
-        if(isset($genre)){
-            $query->where('genre', $genre);
+        try {
+            $query = $this->query();
+
+            if (isset($genre)) {
+                $query->where('genre', $genre);
+            }
+
+            return $query->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
         }
-
-        return $query->get();
     }
 
     public function searchTeamsByFeeAndGenre($minFee,$maxFee,$genre){
 
-        $query = $this->query();
+        try {
+            $query = $this->query();
 
-        if (isset($minFee)) {
-            $query->where('fee', '>=', $minFee);
+            if (isset($minFee)) {
+                $query->where('fee', '>=', $minFee);
+            }
+
+            if (isset($maxFee)) {
+                $query->where('fee', '<=', $maxFee);
+            }
+
+            if (isset($genre)) {
+                $query->where('genre', $genre);
+            }
+
+            return $query->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
         }
-
-        if (isset($maxFee)) {
-            $query->where('fee', '<=', $maxFee);
-        }
-
-        if (isset($genre)) {
-            $query->where('genre', $genre);
-        }
-
-        return $query->get();
     }
 }

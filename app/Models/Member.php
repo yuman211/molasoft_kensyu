@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class Member extends Model
 {
@@ -12,27 +14,37 @@ class Member extends Model
     public function searchMembersByArea($member_area)
     {
 
-        $query = $this->query();
+        try {
+            $query = $this->query();
 
-        if (isset($member_area)) {
-            $query->where('area', $member_area)->get();
+            if (isset($member_area)) {
+                $query->where('area', $member_area)->get();
+            }
+            return $query->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
         }
-        return $query->get();
     }
 
 
     public function searchMembersByAge($minAge, $maxAge)
     {
-        $query = $this->query();
+        try {
+            $query = $this->query();
 
-        if (isset($minAge)) {
-            $query->where('age', '>=', $minAge);
+            if (isset($minAge)) {
+                $query->where('age', '>=', $minAge);
+            }
+
+            if (isset($maxAge)) {
+                $query->where('age', '<=', $maxAge);
+            }
+
+            return $query->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
         }
-
-        if (isset($maxAge)) {
-            $query->where('age', '<=', $maxAge);
-        }
-
-        return $query->get();
     }
 }
