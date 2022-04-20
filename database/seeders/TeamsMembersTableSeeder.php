@@ -17,21 +17,21 @@ class TeamsMembersTableSeeder extends Seeder
     {
 
         DB::table('teams_members')->insert([
-            'teamId' => 1,
-            'memberId' =>2,
-            'createdAt' => "XXX",
-        ]);
-
-        DB::table('teams_members')->insert([
-            'teamId' => 2,
-            'memberId' =>2,
-            'createdAt' => "XXX",
-        ]);
-
-        DB::table('teams_members')->insert([
-            'teamId' => 1,
-            'memberId' =>1,
-            'createdAt' => "XXX",
+            [
+                'teamId' => 1,
+                'memberId' => 2,
+                'createdAt' => "XXX",
+            ],
+            [
+                'teamId' => 2,
+                'memberId' => 2,
+                'createdAt' => "XXX",
+            ],
+            [
+                'teamId' => 1,
+                'memberId' => 1,
+                'createdAt' => "XXX",
+            ]
         ]);
     }
 }
