@@ -33,12 +33,23 @@ class Team extends Model
 
     public function getTeamWithMembers()
     {
-        return $this->with('member')->get();
+
+        try {
+            return $this->with('member')->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
     }
 
     public function getAllTeamsWithRanks()
     {
-        return $this->with('rank')->get();
+        try {
+            return $this->with('rank')->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
     }
 
 

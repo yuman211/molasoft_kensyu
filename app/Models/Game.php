@@ -18,8 +18,12 @@ class Game extends Model
 
     public function getAllGamesWithTeams()
     {
-
-        return $this->with('teams')->get();
+        try {
+            return $this->with('teams')->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
     }
 
     public function getLocatedGamesWithTeams($game_date=null,$game_location=null,$genre=null)
