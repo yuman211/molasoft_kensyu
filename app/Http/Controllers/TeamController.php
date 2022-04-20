@@ -28,6 +28,7 @@ class TeamController extends Controller
 
     public function searchTeams(Team $team, Request $request)
     {
+
         try {
             $minFee = $request->input('minFee');
             $maxFee = $request->input('maxFee');

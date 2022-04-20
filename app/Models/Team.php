@@ -20,28 +20,7 @@ class Team extends Model
 
         try {
             return $this->with('practices.members')->get();
-        } catch (Exception $e) {
-            Log::emergency($e->getMessage());
-            throw $e;
-        }
-    }
 
-    public function searchTeamsByFee($minFee, $maxFee)
-    {
-
-        try {
-
-            $query = $this->query();
-
-            if (isset($minFee)) {
-                $query->where('fee', '>=', $minFee);
-            }
-
-            if (isset($maxFee)) {
-                $query->where('fee', '<=', $maxFee);
-            }
-
-            return $query->get();
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
             throw $e;
