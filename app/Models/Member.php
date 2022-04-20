@@ -11,6 +11,17 @@ class Member extends Model
 {
     use HasFactory;
 
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class,'teamId', 'id');
+    }
+
+    public function getMembersWithTeams($member_id)
+    {
+        return $this->with('team')->find($member_id);
+    }
+    
     public function searchMembersByArea($member_area)
     {
         try {

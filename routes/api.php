@@ -21,14 +21,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/member_list/{member_area?}',[MemberController::class,'showMemberList']);
+Route::get('/member_list/{member_area?}', [MemberController::class, 'showMemberList']);
 
-Route::get('/member_detail/{member_id}',[MemberController::class,'showMemberInfo']);
+Route::get('/member_detail/{member_id}', [MemberController::class, 'showMemberInfo']);
 
-Route::post('/search_members',[MemberController::class,'searchMembers']);
+Route::post('/search_members', [MemberController::class, 'searchMembers']);
 
 Route::get('/team_list/games', [GameController::class, 'showAllGames']);
 
-Route::get('/team_list/{genre?}',[TeamController::class,'showTeams']);
+Route::get('/team_list/{genre?}', [TeamController::class, 'showTeams']);
+
+Route::post('/search_teams', [TeamController::class, 'searchTeams']);
+
+Route::get('/teams_members', [TeamController::class, 'showTeamsWithMembers']);
 
 Route::post('/search_games', [GameController::class, 'searchGames']);

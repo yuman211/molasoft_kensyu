@@ -36,7 +36,6 @@ class TeamController extends Controller
             // if(isset($minFee)||isset($maxFee)){
             // $searchedTeams = $team->searchTeamsByFee($minFee,$maxFee);
             // }
-
             // if(isset($genre)){
             // $searchedTeams = $team->searchTeamsByGenre($genre);
             // }
@@ -49,5 +48,9 @@ class TeamController extends Controller
             return $e;
         }
     }
-
+    //リレーション02.step4
+    public function showTeamsWithMembers(Team $team)
+    {
+        Log::info(json_encode($team->getTeamWithMembers(),JSON_UNESCAPED_UNICODE));
+    }
 }
