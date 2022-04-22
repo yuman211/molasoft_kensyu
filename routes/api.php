@@ -5,6 +5,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\GameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Node\Expr\PostDec;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,15 @@ Route::post('/search_teams', [TeamController::class, 'searchTeams']);
 Route::get('/teams_members', [TeamController::class, 'showTeamsWithMembers']);
 
 Route::post('/search_games', [GameController::class, 'searchGames']);
+
+Route::post('/register/member',[MemberController::class, 'registerMember']);
+
+Route::post('/edit/member',[MemberController::class, 'updateMember']);
+
+Route::post('/delete/member',[MemberController::class,'deleteMember']);
+
+Route::post('/register/team',[TeamController::class, 'registerTeam']);
+
+Route::post('/edit/team',[TeamController::class, 'updateTeam']);
+
+Route::post('/delete/team',[TeamController::class,'softDeleteTeam']);

@@ -11,17 +11,23 @@ class Member extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
 
     public function team()
     {
-        return $this->belongsTo(Team::class,'teamId', 'id');
+        return $this->belongsTo(Team::class, 'team_id', 'id');
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'teams_members', 'member_id', 'team_id');
     }
 
     public function getMembersWithTeams($member_id)
     {
         return $this->with('team')->find($member_id);
     }
-    
+
     public function searchMembersByArea($member_area)
     {
         try {
@@ -37,7 +43,6 @@ class Member extends Model
         }
     }
 
-
     public function searchMembersByAge($minAge, $maxAge)
     {
         try {
@@ -52,6 +57,42 @@ class Member extends Model
             }
 
             return $query->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function insertMember($postData, $team_id = null)
+    {
+        try {
+            $member_id = $this->insertGetId($postData);
+            if (isset($team_id)) {
+                $this->teams()->attach(
+                    ['team_id' => $team_id],
+                    ['member_id' => $member_id]
+                );
+            }
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function updateMember($postData)
+    {
+        try {
+            $this->where('id', '=', $postData['id'])->update($postData);
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function deleteMember($postData)
+    {
+        try {
+            $this->where('id', '=', $postData)->delete($postData);
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
             throw $e;

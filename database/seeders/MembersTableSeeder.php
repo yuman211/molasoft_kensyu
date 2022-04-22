@@ -26,7 +26,7 @@ class MembersTableSeeder extends Seeder
                     'leader' => Arr::random([true, false]),
                     'comment' => Arr::random(['こんにちは', 'こんばんは']),
                     'gender' => Arr::random(['男性', '女性', 'その他']),
-                    'teamId' => Arr::random([1,2,3,4,5]),
+                    'team_id' => Arr::random([1,2,3,4,5]),
                 ]);
         }
 

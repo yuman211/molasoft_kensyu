@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Member;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -103,6 +104,53 @@ class MemberController extends Controller
             $maxAge = $request->input('maxAge');
 
             return $member->searchMembersByAge($minAge, $maxAge);
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
+        }
+    }
+
+    public function registerMember(Member $member,Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $postData = $request->only(['name','age','area','leader','comment','gender']);
+            $team_id = null;
+            if($request->has('team_id')){
+            $team_id = $request->only('team_id');
+            }
+            $member->insertMember($postData,$team_id);
+
+            DB::commit();
+
+            return '登録OK';
+        } catch (Exception $e) {
+
+            DB::rollback();
+
+            Log::emergency($e->getMessage());
+            return $e;
+        }
+    }
+
+    public function updateMember(Member $member, Request $request)
+    {
+        try {
+            $postData = $request->all();
+            $member->updateMember($postData);
+            return '更新OK';
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
+        }
+    }
+
+    public function deleteMember(Member $member,Request $request)
+    {
+        try {
+            $postData = $request->only('id');
+            $member->deleteMember($postData);
+            return '削除OK';
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
             return $e;
