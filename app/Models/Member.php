@@ -63,20 +63,23 @@ class Member extends Model
         }
     }
 
-    public function insertMember($postData, $team_id = null)
+    public function insertMember($postData)
     {
         try {
             $member_id = $this->insertGetId($postData);
-            if (isset($team_id)) {
-                $this->teams()->attach(
-                    ['team_id' => $team_id],
-                    ['member_id' => $member_id]
-                );
-            }
+            return $member_id;
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
             throw $e;
         }
+    }
+
+    public function tagTeamWithMember($member_id, $team_id)
+    {
+        $this->teams()->attach(
+            ['team_id' => $team_id],
+            ['member_id' => $member_id]
+        );
     }
 
     public function updateMember($postData)

@@ -115,11 +115,12 @@ class MemberController extends Controller
         try {
             DB::beginTransaction();
             $postData = $request->only(['name','age','area','leader','comment','gender']);
-            $team_id = null;
+            $member_id = $member->insertMember($postData);
+
             if($request->has('team_id')){
-            $team_id = $request->only('team_id');
+                $team_id = $request->only('team_id');
+                $member->tagTeamWithMember($member_id,$team_id);
             }
-            $member->insertMember($postData,$team_id);
 
             DB::commit();
 
