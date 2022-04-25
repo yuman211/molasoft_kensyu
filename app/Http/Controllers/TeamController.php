@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Team;
 use Illuminate\Support\Facades\Log;
 use Exception;
-
 class TeamController extends Controller
 {
     public function showTeams(Team $team, $genre = null)
@@ -14,10 +13,12 @@ class TeamController extends Controller
         try {
             if (isset($genre)) {
                 $locatedTeams = $team->searchTeamsByGenre($genre);
-                Log::info(json_encode($locatedTeams, JSON_UNESCAPED_UNICODE));
+                // Log::info(json_encode($locatedTeams, JSON_UNESCAPED_UNICODE));
+                return $locatedTeams;
             } else {
-                $allTeams = $team->getAllTeams();
-                Log::info(json_encode($allTeams, JSON_UNESCAPED_UNICODE));
+                $allTeams = $team->getAllTeamsWithPractice();
+                // Log::info(json_encode($allTeams, JSON_UNESCAPED_UNICODE));
+                return $allTeams;
             }
         } catch (Exception $e) {
             Log::emergency($e->getMessage());

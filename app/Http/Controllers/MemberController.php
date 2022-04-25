@@ -93,8 +93,14 @@ class MemberController extends Controller
     //リレーション課題02.step2
     public function showMemberInfo(Member $member, $member_id)
     {
-        $memberWithTeams = $member->getMembersWithTeams($member_id);
-        Log::info(json_encode($memberWithTeams, JSON_UNESCAPED_UNICODE));
+
+        try {
+            $memberWithTeams = $member->getMembersWithTeams($member_id);
+            Log::info(json_encode($memberWithTeams, JSON_UNESCAPED_UNICODE));
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
+        }
     }
 
     public function searchMembers(Member $member, Request $request)

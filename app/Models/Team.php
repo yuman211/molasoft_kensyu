@@ -16,6 +16,11 @@ class Team extends Model
 
     protected $guarded = ['id'];
 
+    public function practices()
+    {
+        return $this->belongsToMany(Practice::class, 'teams_practices', 'team_id', 'practice_id');
+    }
+
     public function rank()
     {
         return $this->hasOne(Rank::class, 'id', 'rank');
@@ -33,35 +38,40 @@ class Team extends Model
 
     public function getTeamWithMembers()
     {
-        return $this->with('member')->get();
-    }
 
-    public function getAllTeamsWithRanks()
-    {
-        return $this->with('rank')->get();
+        try {
+            return $this->with('member')->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
     }
 
     public function getAllTeams()
     {
-        return $this->whereNull('deleted_at')->get();
+        try {
+            return $this->whereNull('deleted_at')->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
     }
 
-    public function searchTeamsByFee($minFee, $maxFee)
+    public function getAllTeamsWithRanks()
     {
+        try {
+            return $this->with('rank')->get();
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getAllTeamsWithPractice(){
 
         try {
+            return $this->with('practices.members')->get();
 
-            $query = $this->query();
-
-            if (isset($minFee)) {
-                $query->where('fee', '>=', $minFee);
-            }
-
-            if (isset($maxFee)) {
-                $query->where('fee', '<=', $maxFee);
-            }
-
-            return $query->get();
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
             throw $e;
