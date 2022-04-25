@@ -22,7 +22,7 @@ class Practice extends Model
         return $this->belongsToMany(Member::class, 'practices_members', 'practice_id', 'member_id');
     }
 
-    public function getAllPractices()
+    public function getAllPracticesWithTeams()
     {
         try {
             return $this->with('teams')->get();
@@ -32,7 +32,7 @@ class Practice extends Model
         }
     }
 
-    public function getPastPractices($today)
+    public function getPastPracticesWithTeams($today)
     {
         try {
             return $this->whereDate('date', '<=', $today)->with('teams')->get();
@@ -42,7 +42,7 @@ class Practice extends Model
         }
     }
 
-    public function getFuturePractices($today)
+    public function getFuturePracticesWithTeams($today)
     {
         try {
             return $this->whereDate('date', '>', $today)->with('teams')->get();

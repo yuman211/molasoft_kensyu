@@ -11,34 +11,20 @@ use Illuminate\Support\Facades\Log;
 
 class PracticeController extends Controller
 {
-    public function showAllPracticeWithTeam(Practice $practice)
+    public function showPracticesWithTeam(Practice $practice)
     {
         try {
-            return $practice->getAllPractices();
-        } catch (Exception $e) {
-            Log::emergency($e->getMessage());
-            return $e;
-        }
-    }
 
-    public function showPastPracticesWithTeam(Practice $practice)
-    {
-        try {
+            $getAllPractices = null;
+            $getPastPractices = null;
+            $getFuturePractices = null;
             $today = Carbon::today();
-            $pastPracticeList = $practice->getPastPractices($today);
-            return $pastPracticeList;
-        } catch (Exception $e) {
-            Log::emergency($e->getMessage());
-            return $e;
-        }
-    }
 
-    public function showFuturePracticesWithTeam(Practice $practice)
-    {
-        try {
-            $today = Carbon::today();
-            $futurePracticeList = $practice->getFuturePractices($today);
-            return $futurePracticeList;
+            $getAllPractices=$practice->getAllPracticesWithTeams();
+            $getPastPractices = $practice->getPastPracticesWithTeams($today);
+            $$getFuturePractices = $practice->getFuturePracticesWithTeams($today);
+            return [$getAllPractices,$getPastPractices, $getFuturePractices];
+
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
             return $e;

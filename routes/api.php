@@ -34,11 +34,8 @@ Route::get('/team_list/{genre?}', [TeamController::class, 'showTeams']);
 
 Route::post('/search_teams', [TeamController::class, 'searchTeams']);
 
-Route::get('/team/practice',[PracticeController::class, 'showAllPracticeWithTeam']);
+Route::get('/team/practice',[PracticeController::class, 'showPracticesWithTeam']);
 
-Route::get('/team/practice/past',[PracticeController::class,'showPastPracticesWithTeam']);
-
-Route::get('/team/practice/future', [PracticeController::class, 'showFuturePracticesWithTeam']);
 Route::get('/teams_members', [TeamController::class, 'showTeamsWithMembers']);
 
 Route::post('/search_games', [GameController::class, 'searchGames']);
