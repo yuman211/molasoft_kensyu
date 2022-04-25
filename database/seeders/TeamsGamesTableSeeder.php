@@ -16,19 +16,21 @@ class TeamsGamesTableSeeder extends Seeder
     public function run()
     {
         DB::table('teams_games')->insert([
-            'teamId' => 1,
-            'gameId' => 2,
-            'createdAt' => "XXX",
-        ]);
-        DB::table('teams_games')->insert([
-            'teamId' => 2,
-            'gameId' => 2,
-            'createdAt' => "XXX",
-        ]);
-        DB::table('teams_games')->insert([
-            'teamId' => 1,
-            'gameId' => 1,
-            'createdAt' => "XXX",
+            [
+                'teamId' => 1,
+                'gameId' => 2,
+                'createdAt' => "XXX",
+            ],
+            [
+                'teamId' => 2,
+                'gameId' => 2,
+                'createdAt' => "XXX",
+            ],
+            [
+                'teamId' => 1,
+                'gameId' => 1,
+                'createdAt' => "XXX",
+            ]
         ]);
     }
 }

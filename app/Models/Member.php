@@ -19,9 +19,14 @@ class Member extends Model
 
     public function getMembersWithTeams($member_id)
     {
-        return $this->with('team')->find($member_id);
+        try {
+            return $this->with('team')->find($member_id);
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            throw $e;
+        }
     }
-    
+
     public function searchMembersByArea($member_area)
     {
         try {

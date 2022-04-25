@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\GameController;
 use Illuminate\Http\Request;
@@ -32,6 +33,8 @@ Route::get('/team_list/games', [GameController::class, 'showAllGames']);
 Route::get('/team_list/{genre?}', [TeamController::class, 'showTeams']);
 
 Route::post('/search_teams', [TeamController::class, 'searchTeams']);
+
+Route::get('/team/practice',[PracticeController::class, 'showPracticesWithTeam']);
 
 Route::get('/teams_members', [TeamController::class, 'showTeamsWithMembers']);
 
