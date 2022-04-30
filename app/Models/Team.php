@@ -50,7 +50,7 @@ class Team extends Model
     public function getAllTeams()
     {
         try {
-            return $this->whereNull('deleted_at')->get();
+            return $this->get();
         } catch (Exception $e) {
             Log::emergency($e->getMessage());
             throw $e;

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('fee');
             $table->integer('rank')->default(1);
             $table->dateTime('updated_at')->nullable();
-            $table->dateTime('deleted_at')->nullable();
+            $table->softDeletes();
         });
     }
 
