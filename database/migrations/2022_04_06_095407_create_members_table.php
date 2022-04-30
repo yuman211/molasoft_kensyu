@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('area')->comment('地域');
             $table->boolean('leader')->default(false)->comment('リーダーかどうか');
             $table->string('comment')->nullable()->comment('コメント');
-            
+            $table->dateTime('updated_at')->nullable();
+
         });
     }
 

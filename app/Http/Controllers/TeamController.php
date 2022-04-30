@@ -54,4 +54,43 @@ class TeamController extends Controller
     {
         Log::info(json_encode($team->getTeamWithMembers(),JSON_UNESCAPED_UNICODE));
     }
+
+
+    public function registerTeam(Team $team, Request $request)
+    {
+        try {
+            $postData = $request->only(['name', 'explain', 'genre', 'fee', 'rank']);
+            $team->insertTeam($postData);
+            return '登録OK';
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
+        }
+    }
+
+    public function updateTeam(Team $team, Request $request)
+    {
+        try {
+            $postData = $request->all();
+            $team->updateTeam($postData);
+            return '更新OK';
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
+        }
+    }
+
+    public function softDeleteTeam(Team $team, Request $request)
+    {
+        try {
+            $postData = $request->only('id');
+            $team->softDeleteTeam($postData);
+
+            return '削除OK';
+        } catch (Exception $e) {
+            Log::emergency($e->getMessage());
+            return $e;
+        }
+    }
+
 }

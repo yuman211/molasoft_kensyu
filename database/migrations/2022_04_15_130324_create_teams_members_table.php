@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('teams_members', function (Blueprint $table) {
-            $table->integer('teamId');
-            $table->integer('memberId');
-            $table->string('createdAt');
+            $table->id();
+            $table->integer('team_id');
+            $table->integer('member_id');
+            // $table->dateTime('created_at')->nullable();
+            // $table->dateTime('updated_at')->nullable();
         });
     }
 
